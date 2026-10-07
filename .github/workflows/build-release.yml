@@ -31,16 +31,20 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
 
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
+      - name: Accept Android SDK Licenses
+        run: |
+          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
+          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platforms;android-35" "build-tools;35.0.0" || true
+
+      - name: Download Gradle Wrapper JAR
+        run: |
+          mkdir -p gradle/wrapper
+          curl -fsSL -o gradle/wrapper/gradle-wrapper.jar \
+            "https://github.com/gradle/gradle/raw/v8.7.0/gradle/wrapper/gradle-wrapper.jar"
+          chmod +x gradlew
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
-
-      - name: Ensure Gradle Wrapper
-        run: |
-          gradle wrapper --gradle-version 8.7
-          chmod +x gradlew
 
       - name: Run Unit Tests
         run: ./gradlew testDebugUnitTest --no-daemon --stacktrace
@@ -52,14 +56,10 @@ jobs:
         id: prepare_apk
         run: |
           mkdir -p release-apks
-          # Copy outputs and give descriptive names
-          find app/build/outputs/apk/debug -name "*.apk" -exec cp {} release-apks/EduPixel-debug.apk \; || true
+          find app/build/outputs/apk/debug   -name "*.apk" -exec cp {} release-apks/EduPixel-debug.apk \; || true
           find app/build/outputs/apk/release -name "*.apk" -exec cp {} release-apks/EduPixel-release-unsigned.apk \; || true
-          # If signed or fallback
-          find app/build/outputs/apk/ -name "*.apk" -exec cp {} release-apks/ \; || true
           ls -la release-apks/
-          
-          # Generate a release tag if not triggered by tag
+
           if [ "${{ startsWith(github.ref, 'refs/tags/v') }}" = "true" ]; then
             TAG_NAME="${{ github.ref_name }}"
           else
@@ -83,13 +83,13 @@ jobs:
           prerelease: false
           body: |
             ### EduPixel School Management System — Android Client Release
-            
+
             **Automated Build Release**
             - Native Jetpack Compose & Material 3 UI
             - Glassmorphic modern aesthetic
             - Connects to FastAPI EduPixel School backend (`http://127.0.0.1:7878/`)
             - Full School, Academic Year, Class, Subject, Student, Score, Attendance, Result, Approval, and Book Distribution support
-            
+
             #### Assets
             - Download the APK below and install on your Android device.
           files: release-apks/*.apk
