@@ -1,0 +1,97 @@
+name: Build & Release EduPixel Android App
+
+on:
+  push:
+    branches:
+      - main
+      - master
+    tags:
+      - 'v*'
+  pull_request:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build & Release APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Ensure Gradle Wrapper
+        run: |
+          gradle wrapper --gradle-version 8.7
+          chmod +x gradlew
+
+      - name: Run Unit Tests
+        run: ./gradlew testDebugUnitTest --no-daemon --stacktrace
+
+      - name: Build Debug & Release APK
+        run: ./gradlew assembleDebug assembleRelease --no-daemon --stacktrace
+
+      - name: Prepare APK Artifacts
+        id: prepare_apk
+        run: |
+          mkdir -p release-apks
+          # Copy outputs and give descriptive names
+          find app/build/outputs/apk/debug -name "*.apk" -exec cp {} release-apks/EduPixel-debug.apk \; || true
+          find app/build/outputs/apk/release -name "*.apk" -exec cp {} release-apks/EduPixel-release-unsigned.apk \; || true
+          # If signed or fallback
+          find app/build/outputs/apk/ -name "*.apk" -exec cp {} release-apks/ \; || true
+          ls -la release-apks/
+          
+          # Generate a release tag if not triggered by tag
+          if [ "${{ startsWith(github.ref, 'refs/tags/v') }}" = "true" ]; then
+            TAG_NAME="${{ github.ref_name }}"
+          else
+            TAG_NAME="v1.0.0-$(date +'%Y%m%d%H%M%S')"
+          fi
+          echo "release_tag=$TAG_NAME" >> $GITHUB_OUTPUT
+
+      - name: Upload APKs as Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: EduPixel-APKs
+          path: release-apks/*.apk
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        if: (startsWith(github.ref, 'refs/tags/v') || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') && github.event_name != 'pull_request'
+        with:
+          tag_name: ${{ steps.prepare_apk.outputs.release_tag }}
+          name: "EduPixel Android App - ${{ steps.prepare_apk.outputs.release_tag }}"
+          draft: false
+          prerelease: false
+          body: |
+            ### EduPixel School Management System — Android Client Release
+            
+            **Automated Build Release**
+            - Native Jetpack Compose & Material 3 UI
+            - Glassmorphic modern aesthetic
+            - Connects to FastAPI EduPixel School backend (`http://127.0.0.1:7878/`)
+            - Full School, Academic Year, Class, Subject, Student, Score, Attendance, Result, Approval, and Book Distribution support
+            
+            #### Assets
+            - Download the APK below and install on your Android device.
+          files: release-apks/*.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

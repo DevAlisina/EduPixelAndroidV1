@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">EduPixel</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="schools">Schools</string>
+    <string name="academic_years">Academic Years</string>
+    <string name="classes">Classes</string>
+    <string name="students">Students</string>
+    <string name="subjects">Subjects</string>
+    <string name="scores">Scores</string>
+    <string name="attendance">Attendance</string>
+    <string name="midterm_results">Midterm Results</string>
+    <string name="annual_results">Annual Results</string>
+    <string name="reports">Reports</string>
+    <string name="books">Books</string>
+    <string name="approvals">Approvals</string>
+    <string name="settings">Settings</string>
+</resources>
