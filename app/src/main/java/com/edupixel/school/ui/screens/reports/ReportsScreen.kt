@@ -1,5 +1,6 @@
 package com.edupixel.school.ui.screens.reports
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -111,6 +112,7 @@ fun ReportsScreen(
                             is ReportData.StudentList -> StudentListView(data.title, data.list)
                             is ReportData.Cover -> CoverSheetView(data.cover)
                             is ReportData.Approvals -> ApprovalSummaryView(data.summary)
+                            null -> Unit
                         }
                     }
                 }

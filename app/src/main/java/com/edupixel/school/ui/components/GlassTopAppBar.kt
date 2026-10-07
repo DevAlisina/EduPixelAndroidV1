@@ -1,5 +1,6 @@
 package com.edupixel.school.ui.components
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -30,7 +31,7 @@ fun GlassTopAppBar(
     Surface(
         modifier = modifier
             .fillMaxWidth()
-            .border(width = 0.5.dp, brush = borderBrush),
+            .border(BorderStroke(0.5.dp, borderBrush)),
         color = bgColor,
         tonalElevation = 2.dp
     ) {

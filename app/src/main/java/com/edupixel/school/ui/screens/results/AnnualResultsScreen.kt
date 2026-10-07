@@ -1,5 +1,6 @@
 package com.edupixel.school.ui.screens.results
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -70,7 +71,7 @@ fun AnnualResultsScreen(
                         EmptyState(
                             title = "No Results Available",
                             description = "No student outcome data has been calculated yet for ${state.schoolClass.name}.",
-                            icon = Icons.Outlined.GraduationCap
+                            icon = Icons.Outlined.School
                         )
                     } else {
                         AnnualContent(

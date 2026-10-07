@@ -364,7 +364,7 @@ private fun DashboardContent(
                                     .background(Color(0xFF3B82F6).copy(alpha = 0.2f)),
                                 contentAlignment = Alignment.Center
                             ) {
-                                Icon(Icons.Outlined.GraduationCap, contentDescription = null, tint = Color(0xFF3B82F6))
+                                Icon(Icons.Outlined.School, contentDescription = null, tint = Color(0xFF3B82F6))
                             }
                             Spacer(modifier = Modifier.width(12.dp))
                             Column {

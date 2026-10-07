@@ -8,6 +8,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -40,7 +41,7 @@ val primaryNavItems = listOf(
     NavItem(Screen.Classes.route, "Classes", Icons.Outlined.Class),
     NavItem(Screen.Students.route, "Students", Icons.Outlined.People),
     NavItem(Screen.MidtermResults.route, "Midterm", Icons.Outlined.Assessment),
-    NavItem(Screen.AnnualResults.route, "Annual", Icons.Outlined.GraduationCap)
+    NavItem(Screen.AnnualResults.route, "Annual", Icons.Outlined.School)
 )
 
 val moreNavItems = listOf(
