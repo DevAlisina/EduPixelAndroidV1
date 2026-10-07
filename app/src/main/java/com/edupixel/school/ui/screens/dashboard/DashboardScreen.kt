@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.MenuBook
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -271,7 +272,7 @@ private fun DashboardContent(
                 MetricCard(
                     title = "Subjects",
                     value = "${state.classDashboard?.subjects ?: 0}",
-                    icon = Icons.Outlined.MenuBook,
+                    icon = Icons.AutoMirrored.Outlined.MenuBook,
                     color = Color(0xFF818CF8),
                     modifier = Modifier.weight(1f),
                     onClick = onNavigateToClasses

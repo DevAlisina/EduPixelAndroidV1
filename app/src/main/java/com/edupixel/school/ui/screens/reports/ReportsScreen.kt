@@ -91,6 +91,7 @@ fun ReportsScreen(
                     )
                 }
                 is ReportsUiState.Success -> {
+                    val reportData = state.reportData
                     if (state.schoolClass == null) {
                         EmptyState(
                             title = "No Class Selected",
@@ -99,20 +100,19 @@ fun ReportsScreen(
                             actionLabel = "Go to Classes",
                             onActionClick = onNavigateToClasses
                         )
-                    } else if (state.reportData == null) {
+                    } else if (reportData == null) {
                         EmptyState(
                             title = "Report Unavailable",
                             description = "Data could not be retrieved for the selected report."
                         )
                     } else {
-                        when (val data = state.reportData) {
-                            is ReportData.Compact -> CompactRegisterView(data.rows)
-                            is ReportData.SubjectRegister -> SubjectRegisterView(data.data)
-                            is ReportData.Notice -> NoticeCardsView(data.cards)
-                            is ReportData.StudentList -> StudentListView(data.title, data.list)
-                            is ReportData.Cover -> CoverSheetView(data.cover)
-                            is ReportData.Approvals -> ApprovalSummaryView(data.summary)
-                            null -> Unit
+                        when (reportData) {
+                            is ReportData.Compact -> CompactRegisterView(reportData.rows)
+                            is ReportData.SubjectRegister -> SubjectRegisterView(reportData.data)
+                            is ReportData.Notice -> NoticeCardsView(reportData.cards)
+                            is ReportData.StudentList -> StudentListView(reportData.title, reportData.list)
+                            is ReportData.Cover -> CoverSheetView(reportData.cover)
+                            is ReportData.Approvals -> ApprovalSummaryView(reportData.summary)
                         }
                     }
                 }

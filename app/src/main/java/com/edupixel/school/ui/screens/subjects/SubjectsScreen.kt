@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.MenuBook
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -104,7 +105,7 @@ fun SubjectsScreen(
                             EmptyState(
                                 title = "No Subjects Added",
                                 description = "Add subjects (e.g. Dari, Mathematics, English) for ${state.schoolClass.name}.",
-                                icon = Icons.Outlined.MenuBook,
+                                icon = Icons.AutoMirrored.Outlined.MenuBook,
                                 actionLabel = "Add Subject",
                                 onActionClick = {
                                     subjectToEdit = null

@@ -2,7 +2,7 @@ package com.edupixel.school
 
 import com.edupixel.school.core.network.RetrofitClient
 import com.edupixel.school.data.remote.models.*
-import kotlinx.serialization.json.decodeFromString
+import kotlinx.serialization.decodeFromString
 import org.junit.Assert.*
 import org.junit.Test
 

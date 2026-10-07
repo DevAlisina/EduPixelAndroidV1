@@ -2,6 +2,7 @@ package com.edupixel.school.ui.navigation
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.MenuBook
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -47,7 +48,7 @@ val primaryNavItems = listOf(
 val moreNavItems = listOf(
     NavItem(Screen.Schools.route, "Schools", Icons.Outlined.School),
     NavItem(Screen.AcademicYears.route, "Academic Years", Icons.Outlined.CalendarMonth),
-    NavItem(Screen.Subjects.route, "Subjects", Icons.Outlined.MenuBook),
+    NavItem(Screen.Subjects.route, "Subjects", Icons.AutoMirrored.Outlined.MenuBook),
     NavItem(Screen.Scores.route, "Score Entry", Icons.Outlined.EditNote),
     NavItem(Screen.Attendance.route, "Attendance", Icons.Outlined.CalendarToday),
     NavItem(Screen.Reports.route, "Reports", Icons.Outlined.Summarize),
